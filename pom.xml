@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
@@ -13,12 +13,12 @@
     <dependency>
         <groupId>edu.stanford.nlp</groupId>
         <artifactId>stanford-corenlp</artifactId>
-        <version>3.5.1</version>
+        <version>3.4</version>
     </dependency>
     <dependency>
         <groupId>edu.stanford.nlp</groupId>
         <artifactId>stanford-parser</artifactId>
-        <version>3.5.1</version>
+        <version>3.4</version>
     </dependency>
 
     <!--XML Parsing Utility-->
@@ -121,6 +121,10 @@
                             <include>com.jcabi:*</include>
                             <include>PDB-Finder:*</include>
                             <include>org.aspectj:*</include>
+                            <!--joestelmach is the date parser and ical4j is a dependency it uses-->
+                            <include>com.joestelmach:*</include>
+                            <include>org.mnode.ical4j:*</include>
+                            <include>backport-util-concurrent:*</include>
                             <include>javax.validation:*</include>
                             <include>edu.stanford.nlp:*</include>
                             <include>net.orfjackal.retrolambda:*</include>

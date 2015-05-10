@@ -36,16 +36,22 @@ public class Main {
         String[][] AbbreviationsTable = FalsePositiveTableGenerator(new File(args[3]));
         PDBDictionary Dictionary = PdbIdSourceDownloader.getPdbHashTable();
         System.out.println("Hashtable Done");
+        /**
+         * Reads in the entire directory of files with a pre-liminary filter.
+         * The results are collected and redistributed on the next spark launch.
+         */
         SparkConf conf = new SparkConf().setAppName("PDB").setMaster(args[2]);
         JavaSparkContext sparkContext = new JavaSparkContext(conf);
         Broadcast<PDBDictionary> DictionaryBroadcast = sparkContext.broadcast(Dictionary);
         // RDD of (K, V) pairs mapped to (File Name, File Body)
-        JavaPairRDD<String, String> FileTable = sparkContext.wholeTextFiles("file://" + args[0]).filter(p -> PDBFinder.getPdbMatchType(p._2()) != null);
+        JavaPairRDD<String, String> FileTable = sparkContext.wholeTextFiles(args[0]).filter(p -> PDBFinder.getPdbMatchType(p._2()) != null);
+        List<Tuple2<String, String>> IntermediateFiltered = FileTable.collect();
 
-        JavaRDD<Tuple2<String, String>> SentenceTable = FileTable.flatMap(p -> FileToSentencesTransform(p._1(), p._2()));
-        List<Tuple2<String, String>> IntermediateFiltered = SentenceTable.collect();
+        JavaRDD<Tuple2<String, String>> filteredCollection = sparkContext.parallelize(IntermediateFiltered, 100);
+        JavaRDD<Tuple2<String, String>> SentenceTable = filteredCollection.flatMap(p -> FileToSentencesTransform(p._1(), p._2()));
 
-        JavaRDD<JournalFeatureVector> FeatureVectorRDD = sparkContext.parallelize(IntermediateFiltered, 100).map(T -> new JournalFeatureVector(T._1(), T._2(), DictionaryBroadcast));
+
+        JavaRDD<JournalFeatureVector> FeatureVectorRDD = SentenceTable.map(T -> new JournalFeatureVector(T._1(), T._2(), DictionaryBroadcast));
 
        List<JournalFeatureVector> collectedVectors = MLApplications.Application1(FeatureVectorRDD, 1, AbbreviationsTable);
         MLPipeline.CompositeScorer.RunCompositeScorer(collectedVectors, "SVMCompositeScorer.csv");

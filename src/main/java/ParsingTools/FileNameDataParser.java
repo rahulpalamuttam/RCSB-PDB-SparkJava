@@ -25,8 +25,15 @@ public class FileNameDataParser {
     public static Date ParseDateFromFile(String Name){
         String year = ParseYear(Name);
         int index = Name.indexOf(year);
-        List<DateGroup> DateGroups = parser.parse(Name.substring(index).replaceAll("_", " "));
-        if(year != "" && DateGroups.size() > 0) {
+
+        List<DateGroup> DateGroups = null;
+        try {
+            DateGroups = parser.parse(Name.substring(index).replaceAll("_", " "));
+        } catch (Exception npe) {
+            System.out.println(Name);
+            System.out.println(Name.substring(index).replaceAll("_", " "));
+        }
+        if (year != "" && DateGroups != null && DateGroups.size() > 0) {
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(DateGroups.get(0).getDates().get(0));
             calendar.set(Calendar.YEAR, Integer.parseInt(year));
