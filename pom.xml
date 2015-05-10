@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>PDB-Finder</groupId>
+    <artifactId>PDB-Finder-Java</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+<dependencies>
+    <!--Stanford Parser Libraries-->
+    <dependency>
+        <groupId>edu.stanford.nlp</groupId>
+        <artifactId>stanford-corenlp</artifactId>
+        <version>3.5.1</version>
+    </dependency>
+    <dependency>
+        <groupId>edu.stanford.nlp</groupId>
+        <artifactId>stanford-parser</artifactId>
+        <version>3.5.1</version>
+    </dependency>
+
+    <!--XML Parsing Utility-->
+    <dependency>
+        <groupId>com.jcabi</groupId>
+        <artifactId>jcabi-xml</artifactId>
+        <version>0.16</version>
+    </dependency>
+<!--The scala language, Only 2.10.4 is able to run locally-->
+    <dependency>
+        <groupId>org.scala-lang</groupId>
+        <artifactId>scala-library</artifactId>
+        <version>2.10.4</version>
+    </dependency>
+<!--Java helper file io library-->
+    <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>18.0</version>
+    </dependency>
+
+    <!--Apache Spark Libraries-->
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-core_2.10</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+    <!--Apache Spark Machine Learning Library-->
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-mllib_2.10</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.spark</groupId>
+        <artifactId>spark-sql_2.10</artifactId>
+        <version>1.1.0</version>
+    </dependency>
+<!--Date Parser-->
+    <dependency>
+        <groupId>com.joestelmach</groupId>
+        <artifactId>natty</artifactId>
+        <version>0.10.1</version>
+    </dependency>
+
+</dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <!--Maven compiler for java version-->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+                <!--Include lambda expressions for 1.7-->
+            <plugin>
+                <groupId>net.orfjackal.retrolambda</groupId>
+                <artifactId>retrolambda-maven-plugin</artifactId>
+                <version>2.0.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>process-main</goal>
+                            <goal>process-test</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!--Which Java Version to RetroCompile Lambda Expressions To-->
+                <configuration>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+
+            <!--The shade plugin used to make a super jar of all other jars-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <!--<version>2.3</version>-->
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <mainClass>org.sdsc.pdbproject.Main</mainClass>
+                        </transformer>
+                    </transformers>
+                    <artifactSet>
+                        <includes>
+                            <include>com.jcabi:*</include>
+                            <include>org.sdsc:*</include>
+                            <include>org.aspectj:*</include>
+                            <include>javax.validation:*</include>
+                            <include>edu.stanford.nlp:*</include>
+                        </includes>
+                        <!-- <excludes> -->
+                        <!--   <exclude>*</exclude> -->
+                        <!-- </excludes> -->
+                    </artifactSet>
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+                            <excludes>
+                                <exclude>META-INF/*.SF</exclude>
+                                <exclude>META-INF/*.DSA</exclude>
+                                <exclude>META-INF/*.RSA</exclude>
+                                <exclude>META_INF/*</exclude>
+                                <exclude>scala/*</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+                    <!-- <minimizeJar>true</minimizeJar> -->
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
