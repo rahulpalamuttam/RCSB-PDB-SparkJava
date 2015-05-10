@@ -2,14 +2,14 @@ package MLPipeline;
 
 import FeatureVector.JournalFeatureVector;
 import com.google.common.collect.HashMultimap;
-import org.apache.commons.collections.MultiMap;
 import scala.Tuple2;
 import scala.Tuple4;
 import scala.Tuple5;
 
 import java.io.File;
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by rahul on 5/9/15.

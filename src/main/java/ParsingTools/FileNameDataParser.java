@@ -1,14 +1,14 @@
 package ParsingTools;
 
+import com.joestelmach.natty.DateGroup;
+import com.joestelmach.natty.Parser;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.joestelmach.natty.DateGroup;
-import com.joestelmach.natty.Parser;
 /**
  * Created by rahul on 5/9/15.
  */

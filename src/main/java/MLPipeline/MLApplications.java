@@ -1,14 +1,12 @@
 package MLPipeline;
 
 import FeatureVector.JournalFeatureVector;
-import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.mllib.classification.ClassificationModel;
 import org.apache.spark.mllib.classification.NaiveBayesModel;
 import org.apache.spark.mllib.classification.SVMModel;
 import org.apache.spark.mllib.feature.HashingTF;
 import org.apache.spark.mllib.regression.LabeledPoint;
-import scala.Tuple2;
 
 import java.io.File;
 import java.io.FileWriter;

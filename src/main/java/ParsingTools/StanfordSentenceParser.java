@@ -1,21 +1,18 @@
 package ParsingTools;
 
-import java.io.Serializable;
-
-
-/**
- * Created by rahul on 3/16/15.
- */
-
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;
 import edu.stanford.nlp.pipeline.StanfordCoreNLP;
 import edu.stanford.nlp.util.CoreMap;
 
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
+
+/**
+ * Created by rahul on 3/16/15.
+ */
 
 /**
  * Uses the Stanford NLP library to split a body of text into sentences

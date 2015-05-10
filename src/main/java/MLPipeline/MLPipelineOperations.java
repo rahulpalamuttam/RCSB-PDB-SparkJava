@@ -4,26 +4,23 @@ import FeatureVector.JournalFeatureVector;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.mllib.classification.*;
 import org.apache.spark.mllib.evaluation.BinaryClassificationMetrics;
-import org.apache.spark.mllib.evaluation.binary.BinaryClassificationMetricComputer;
 import org.apache.spark.mllib.feature.HashingTF;
 import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.regression.LabeledPoint;
-import org.apache.spark.rdd.RDD;
 import scala.Tuple2;
-
-import java.util.Set;
 
 /**
  * Created by rahul on 5/9/15.
  */
 public class MLPipelineOperations {
+
     /**
      * Takes a journal feature vector and classifies it. The produced vector has its NaiveBayesPrediction field set to true or false,
      * and has it's SVMScore computed and set, based on the hashingTf scheme for vectorization, NaiveBayesModel, and SVMModel parameters.
-     * @param Jvect JournalFeatureVector to be classified
-     * @param NaiveBayesmodel trained bayesian model used for classification
-     * @param hashingTf uses the hashing trick to produce feature vector of size 2 ^ 20
-     * @param SVMModel trained SVM model used for classification
+     * @param jvect
+     * @param naiveBayesModel
+     * @param hashingTF
+     * @param svmModel
      * @return
      */
     public static JournalFeatureVector ClassifyVector(JournalFeatureVector jvect, NaiveBayesModel naiveBayesModel, HashingTF hashingTF, SVMModel svmModel){
@@ -36,8 +33,8 @@ public class MLPipelineOperations {
 
     /**
      * Takes the labeled negative and positive training set of labeled point vectors and trains both SVM and NiaveBayes
-     * @param ClassificationModel[0] the training set
-     * @param ClassificationModel[1] the number of SVM iterations
+     * @param training
+     * @param SVMIterationCount
      * @return
      */
     public static ClassificationModel[] Trainer(JavaRDD<LabeledPoint> training, int SVMIterationCount) {
