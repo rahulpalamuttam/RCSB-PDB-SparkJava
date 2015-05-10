@@ -98,7 +98,7 @@ public class MLApplications {
 
         FalsePositiveCompute(negVectRDD, posVectRDD, AbbreviationTable, hashingTF, svmModel, naiveBayesModel, "Negatives", true);
         FalsePositiveCompute(undVectRDD, posVectRDD, AbbreviationTable, hashingTF, svmModel, naiveBayesModel, "Undetermined", true);
-        FalsePositiveCompute(negVectRDD, posVectRDD, AbbreviationTable, hashingTF, svmModel, naiveBayesModel, "Negatives", false);
+        FalsePositiveCompute(negVectRDD, posVectRDD, AbbreviationTable, hashingTF, svmModel, naiveBayesModel, "Anti-Abbreviation-Negatives", false);
         return allCollected;
     }
 

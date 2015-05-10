@@ -6,7 +6,7 @@ Run Variables <br />
         $SPARK_MASTER_IP = by default this should be set to local. However when connecting to a cluster set it to the ip address of the master node followed by ":4040" <br />
 
 Standalone mode <br />
-    1. mvn package <br />
+    1. mvn clean package <br />
     2. run : java -jar target/PDB-Finder-Java-1.0-SNAPSHOT.jar $ARTICLES_DIRECTORY_PATH $SERIALIZED_ARTICLES_PATH $SPARK_MASTER_IP PDBID_FalsePositives.csv <br />
 
 
@@ -25,3 +25,5 @@ Additional Notes :
     The following build uses spark 1.1.0, and java 8. I used java 8 for it's support for lambda expressions which make writing map functions much simpler.
     However I also use the retrolambda plugin, to allow lambda expressions to be compiled into bytecode that is interpreted by earlier versions of the JVM i.e. Java 7.
     Thus the program can be deployed on clusters supporting java 7 if necessary and java 8.
+
+    Due to the use of retro lambda, always run mvn clean package. It will only work with clean builds.

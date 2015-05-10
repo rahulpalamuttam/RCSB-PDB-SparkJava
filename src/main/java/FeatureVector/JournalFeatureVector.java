@@ -130,7 +130,7 @@ public class JournalFeatureVector implements Serializable {
     }
 
     public Boolean isPositive() {
-        return Positive;
+        return Positive && Positives.size() > 0;
     }
 
     public Boolean isUndetermined() {

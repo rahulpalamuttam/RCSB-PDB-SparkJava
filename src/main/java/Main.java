@@ -12,7 +12,6 @@ import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.broadcast.Broadcast;
 import scala.Tuple2;
-
 import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -24,7 +23,7 @@ import java.util.List;
  */
 public class Main {
     File ARTICLE_SERIALOBJECT = new File("Articles.txt.object.ser");
-    int SVM_ITERATIONCOUNT = 200;
+    int SVM_ITERATIONCOUNT = 1;
 
     public static void main(String[] args) {
         System.out.println("Hello World");
@@ -40,7 +39,7 @@ public class Main {
         JavaSparkContext sparkContext = new JavaSparkContext(conf);
         Broadcast<PDBDictionary> DictionaryBroadcast = sparkContext.broadcast(Dictionary);
         // RDD of (K, V) pairs mapped to (File Name, File Body)
-        JavaPairRDD<String, String> FileTable = sparkContext.wholeTextFiles("file://" + args[0], 1000);
+        JavaPairRDD<String, String> FileTable = sparkContext.wholeTextFiles("file://" + args[0]).filter(p -> PDBFinder.getPdbMatchType(p._2()) != null);
 
         JavaRDD<Tuple2<String, String>> SentenceTable = FileTable.flatMap(p -> FileToSentencesTransform(p._1(), p._2()));
         List<Tuple2<String, String>> IntermediateFiltered = SentenceTable.collect();
@@ -56,7 +55,8 @@ public class Main {
      * to the (fileName, sentence) which are the individual sentences that compose the file.
      * The Stanford CoreNLP library is used to split sentences
      *
-     * @param fl
+     * @param name
+     * @param body
      * @return
      */
     public static List<Tuple2<String, String>> FileToSentencesTransform(String name, String body) {

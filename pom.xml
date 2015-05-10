@@ -113,16 +113,18 @@
                 <configuration>
                     <transformers>
                         <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                            <mainClass>org.sdsc.pdbproject.Main</mainClass>
+                            <mainClass>PDB-Finder.Main</mainClass>
                         </transformer>
                     </transformers>
                     <artifactSet>
                         <includes>
                             <include>com.jcabi:*</include>
-                            <include>org.sdsc:*</include>
+                            <include>PDB-Finder:*</include>
                             <include>org.aspectj:*</include>
                             <include>javax.validation:*</include>
                             <include>edu.stanford.nlp:*</include>
+                            <include>net.orfjackal.retrolambda:*</include>
+                            <include>org.apache.spark:*</include>
                         </includes>
                         <!-- <excludes> -->
                         <!--   <exclude>*</exclude> -->
