@@ -50,8 +50,8 @@ public class MLApplications {
         SVMModel svmModel = (SVMModel)models[1];
 
         // save models to directory
-//        naiveBayesModel.save(sc, "NaiveBayes");
-//        svmModel.save(sc, "SVMModel");
+        // naiveBayesModel.save(sc, "NaiveBayes");
+        // svmModel.save(sc, "SVMModel");
 
         //test the models on the test set and collect results
         Double[] testResults = MLPipelineOperations.Tester(naiveBayesModel, svmModel, test);
